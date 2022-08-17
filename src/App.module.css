@@ -1,4 +1,15 @@
 .App {
-  text-align: center;
+  padding: 1em;
 }
 
+.face {
+  border: 1px solid gray;
+}
+
+.face td {
+  width: 1em; height: 1em;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1em;
+  padding: 0;
+}

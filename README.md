@@ -32,6 +32,29 @@ cube net
 a b c        - left top right
     d e f    -          front bottom back
 
+bit pattern: left top right bottom
+
+A 0b0000 0b0011 0b1010 0b1010 0b1100 0b0000
+B 0b0000 0b0001 0b0101 0b1110 0b1000 0b0100
+C 0b0010 0b1110 0b1101 0b0100 0b0010 0b1110
+D 0b0000 0b0100 0b0101 0b0100 0b0010 0b1110
+
+TODO: validate cubes as each cubes faces connect to each other
+(12 constraints, each face should appear 2x on the lhs and 2x on the rhs)
+a right = b left
+b right = c left
+c bottom = d top
+d right = e left
+e right = f left
+b bottom = d left
+c right = e top
+a top = f bottom
+d bottom = a bottom
+e bottom = a left
+f top = c top
+f right = b top
+
+
 A x 3
 a blank
 b bottom + right
