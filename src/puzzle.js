@@ -4,12 +4,16 @@ class Face {
         this.top = !!(edges & 0b0100);
         this.right = !!(edges & 0b0010);
         this.bottom = !!(edges & 0b0001);
+
+        console.assert(!(this.left && this.top && this.right && this.bottom),
+                       "Invalid face");
     }
 }
 
 class Cube {
     constructor (faces) {
         this.faces = faces.map((f) => new Face(f));
+        console.assert(this.valid(), "Invalid cube");
     }
     get face_a() { return this.faces[0]; }
     get face_b() { return this.faces[1]; }
@@ -17,6 +21,23 @@ class Cube {
     get face_d() { return this.faces[3]; }
     get face_e() { return this.faces[4]; }
     get face_f() { return this.faces[5]; }
+
+    valid() {
+        return (
+            this.face_a.right == this.face_b.left
+            && this.face_b.right == this.face_c.left
+            && this.face_c.bottom == this.face_d.top
+            && this.face_d.right == this.face_e.left
+            && this.face_e.right == this.face_f.left
+            && this.face_b.bottom == this.face_d.left
+            && this.face_c.right == this.face_e.top
+            && this.face_a.top == this.face_f.bottom
+            && this.face_d.bottom == this.face_a.bottom
+            && this.face_e.bottom == this.face_a.left
+            && this.face_f.top == this.face_c.top
+            && this.face_f.right == this.face_b.top
+        );
+    }
 }
 
 export default { Cube };
