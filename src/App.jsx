@@ -12,16 +12,16 @@ function App() {
   return (
       <div class={styles.App}>
           <h2>A</h2>
-          <CubeNet {...CubeA} />
+          <CubeNet cube={CubeA} />
 
           <h2>B</h2>
-          <CubeNet {...CubeB} />
+          <CubeNet cube={CubeB} />
 
           <h2>C</h2>
-          <CubeNet {...CubeC} />
+          <CubeNet cube={CubeC} />
 
           <h2>D</h2>
-          <CubeNet {...CubeD} />
+          <CubeNet cube={CubeD} />
     </div>
   );
 }

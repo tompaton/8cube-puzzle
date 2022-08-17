@@ -9,17 +9,17 @@ function CubeFace(props) {
                 <tbody>
                     <tr>
                         <td></td>
-                        <td>{props.top ? DOT : ''}</td>
+                        <td>{props.face.top ? DOT : ''}</td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td>{props.left ? DOT : ''}</td>
+                        <td>{props.face.left ? DOT : ''}</td>
                         <td></td>
-                        <td>{props.right ? DOT : ''}</td>
+                        <td>{props.face.right ? DOT : ''}</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>{props.bottom ? DOT : ''}</td>
+                        <td>{props.face.bottom ? DOT : ''}</td>
                         <td></td>
                     </tr>
                 </tbody>
@@ -33,18 +33,18 @@ export function CubeNet(props) {
         <table>
             <tbody>
                 <tr>
-                    <CubeFace {...props.face_a} />
-                    <CubeFace {...props.face_b} />
-                    <CubeFace {...props.face_c} />
+                    <CubeFace face={props.cube.face_a} />
+                    <CubeFace face={props.cube.face_b} />
+                    <CubeFace face={props.cube.face_c} />
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
-                    <CubeFace {...props.face_d} />
-                    <CubeFace {...props.face_e} />
-                    <CubeFace {...props.face_f} />
+                    <CubeFace face={props.cube.face_d} />
+                    <CubeFace face={props.cube.face_e} />
+                    <CubeFace face={props.cube.face_f} />
                 </tr>
             </tbody>
         </table>
