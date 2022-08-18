@@ -9,3 +9,11 @@
 .face svg {
   display: block;
 }
+
+.adjacent_ok {
+  background-color: green;
+}
+
+.adjacent_bad {
+  background-color: red;
+}

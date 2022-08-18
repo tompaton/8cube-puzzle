@@ -76,6 +76,12 @@ export function TurnCube(props) {
     );
 }
 
+function CheckAdjacent(props) {
+    return (
+        <td class={props.edge1 == props.edge2 ? styles.adjacent_ok : styles.adjacent_bad}></td>
+    );
+}
+
 export function Board(props) {
     return (
         <table>
@@ -83,48 +89,116 @@ export function Board(props) {
                 <tr>
                     <CubeFace face={props.cubes[0][0].face_a} />
                     <CubeFace face={props.cubes[0][0].face_b} />
+                    <CheckAdjacent edge1={props.cubes[0][0].face_b.right}
+                                   edge2={props.cubes[0][1].face_b.left} />
                     <CubeFace face={props.cubes[0][1].face_b} />
+                    <CheckAdjacent edge1={props.cubes[0][1].face_b.right}
+                                   edge2={props.cubes[0][2].face_b.left} />
                     <CubeFace face={props.cubes[0][2].face_b} />
+                    <CheckAdjacent edge1={props.cubes[0][2].face_b.right}
+                                   edge2={props.cubes[0][3].face_b.left} />
                     <CubeFace face={props.cubes[0][3].face_b} />
                     <CubeFace face={props.cubes[0][3].face_c} />
                 </tr>
                 <tr>
+                    <CheckAdjacent edge1={props.cubes[0][0].face_a.bottom}
+                                   edge2={props.cubes[1][0].face_a.top} />
+                    <CheckAdjacent edge1={props.cubes[0][0].face_b.bottom}
+                                   edge2={props.cubes[1][0].face_b.top} />
+                    <td></td>
+                    <CheckAdjacent edge1={props.cubes[0][1].face_b.bottom}
+                                   edge2={props.cubes[1][1].face_b.top} />
+                    <td></td>
+                    <CheckAdjacent edge1={props.cubes[0][2].face_b.bottom}
+                                   edge2={props.cubes[1][2].face_b.top} />
+                    <td></td>
+                    <CheckAdjacent edge1={props.cubes[0][3].face_b.bottom}
+                                   edge2={props.cubes[1][3].face_b.top} />
+                    <CheckAdjacent edge1={props.cubes[0][3].face_c.bottom}
+                                   edge2={props.cubes[1][3].face_c.top} />
+                </tr>
+                <tr>
                     <CubeFace face={props.cubes[1][0].face_a} />
                     <CubeFace face={props.cubes[1][0].face_b} />
+                    <CheckAdjacent edge1={props.cubes[1][0].face_b.right}
+                                   edge2={props.cubes[1][1].face_b.left} />
                     <CubeFace face={props.cubes[1][1].face_b} />
+                    <CheckAdjacent edge1={props.cubes[1][1].face_b.right}
+                                   edge2={props.cubes[1][2].face_b.left} />
                     <CubeFace face={props.cubes[1][2].face_b} />
+                    <CheckAdjacent edge1={props.cubes[1][2].face_b.right}
+                                   edge2={props.cubes[1][3].face_b.left} />
                     <CubeFace face={props.cubes[1][3].face_b} />
                     <CubeFace face={props.cubes[1][3].face_c} />
                 </tr>
                 <tr>
                     <td></td>
                     <CubeFace face={props.cubes[1][0].turn_bottom().face_b} />
+                    <CheckAdjacent edge1={props.cubes[1][0].turn_bottom().face_b.right}
+                                   edge2={props.cubes[1][1].turn_bottom().face_b.left} />
                     <CubeFace face={props.cubes[1][1].turn_bottom().face_b} />
+                    <CheckAdjacent edge1={props.cubes[1][1].turn_bottom().face_b.right}
+                                   edge2={props.cubes[1][2].turn_bottom().face_b.left} />
                     <CubeFace face={props.cubes[1][2].turn_bottom().face_b} />
+                    <CheckAdjacent edge1={props.cubes[1][2].turn_bottom().face_b.right}
+                                   edge2={props.cubes[1][3].turn_bottom().face_b.left} />
                     <CubeFace face={props.cubes[1][3].turn_bottom().face_b} />
                     <td></td>
                 </tr>
                 <tr>
                     <td></td>
                     <CubeFace face={props.cubes[1][0].turn_bottom().turn_bottom().face_b} />
+                    <CheckAdjacent edge1={props.cubes[1][0].turn_bottom().turn_bottom().face_b.right}
+                                   edge2={props.cubes[1][1].turn_bottom().turn_bottom().face_b.left} />
                     <CubeFace face={props.cubes[1][1].turn_bottom().turn_bottom().face_b} />
+                    <CheckAdjacent edge1={props.cubes[1][1].turn_bottom().turn_bottom().face_b.right}
+                                   edge2={props.cubes[1][2].turn_bottom().turn_bottom().face_b.left} />
                     <CubeFace face={props.cubes[1][2].turn_bottom().turn_bottom().face_b} />
+                    <CheckAdjacent edge1={props.cubes[1][2].turn_bottom().turn_bottom().face_b.right}
+                                   edge2={props.cubes[1][3].turn_bottom().turn_bottom().face_b.left} />
                     <CubeFace face={props.cubes[1][3].turn_bottom().turn_bottom().face_b} />
                     <td></td>
                 </tr>
                 <tr>
                     <td></td>
+                    <CheckAdjacent edge1={props.cubes[1][0].turn_bottom().turn_bottom().face_b.bottom}
+                                   edge2={props.cubes[0][0].turn_bottom().turn_bottom().face_b.top} />
+                    <td></td>
+                    <CheckAdjacent edge1={props.cubes[1][1].turn_bottom().turn_bottom().face_b.bottom}
+                                   edge2={props.cubes[0][1].turn_bottom().turn_bottom().face_b.top} />
+                    <td></td>
+                    <CheckAdjacent edge1={props.cubes[1][2].turn_bottom().turn_bottom().face_b.bottom}
+                                   edge2={props.cubes[0][2].turn_bottom().turn_bottom().face_b.top} />
+                    <td></td>
+                    <CheckAdjacent edge1={props.cubes[1][3].turn_bottom().turn_bottom().face_b.bottom}
+                                   edge2={props.cubes[0][3].turn_bottom().turn_bottom().face_b.top} />
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
                     <CubeFace face={props.cubes[0][0].turn_bottom().turn_bottom().face_b} />
+                    <CheckAdjacent edge1={props.cubes[0][0].turn_bottom().turn_bottom().face_b.right}
+                                   edge2={props.cubes[0][1].turn_bottom().turn_bottom().face_b.left} />
                     <CubeFace face={props.cubes[0][1].turn_bottom().turn_bottom().face_b} />
+                    <CheckAdjacent edge1={props.cubes[0][1].turn_bottom().turn_bottom().face_b.right}
+                                   edge2={props.cubes[0][2].turn_bottom().turn_bottom().face_b.left} />
                     <CubeFace face={props.cubes[0][2].turn_bottom().turn_bottom().face_b} />
+                    <CheckAdjacent edge1={props.cubes[0][2].turn_bottom().turn_bottom().face_b.right}
+                                   edge2={props.cubes[0][3].turn_bottom().turn_bottom().face_b.left} />
                     <CubeFace face={props.cubes[0][3].turn_bottom().turn_bottom().face_b} />
                     <td></td>
                 </tr>
                 <tr>
                     <td></td>
                     <CubeFace face={props.cubes[0][0].turn_top().face_b} />
+                    <CheckAdjacent edge1={props.cubes[0][0].turn_top().face_b.right}
+                                   edge2={props.cubes[0][1].turn_top().face_b.left} />
                     <CubeFace face={props.cubes[0][1].turn_top().face_b} />
+                    <CheckAdjacent edge1={props.cubes[0][1].turn_top().face_b.right}
+                                   edge2={props.cubes[0][2].turn_top().face_b.left} />
                     <CubeFace face={props.cubes[0][2].turn_top().face_b} />
+                    <CheckAdjacent edge1={props.cubes[0][2].turn_top().face_b.right}
+                                   edge2={props.cubes[0][3].turn_top().face_b.left} />
                     <CubeFace face={props.cubes[0][3].turn_top().face_b} />
                     <td></td>
                 </tr>

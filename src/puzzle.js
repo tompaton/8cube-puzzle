@@ -85,4 +85,52 @@ class Cube {
     }
 }
 
-export default { Cube };
+class Board {
+    constructor (cubes) {
+        this.cubes = cubes;
+    }
+
+    invalid() {
+        var count = 0;
+
+        if(this.cubes[0][0].face_b.right != this.cubes[0][1].face_b.left) count++;
+        if(this.cubes[0][1].face_b.right != this.cubes[0][2].face_b.left) count++;
+        if(this.cubes[0][2].face_b.right != this.cubes[0][3].face_b.left) count++;
+
+        if(this.cubes[0][0].face_a.bottom != this.cubes[1][0].face_a.top) count++;
+        if(this.cubes[0][0].face_b.bottom != this.cubes[1][0].face_b.top) count++;
+        if(this.cubes[0][1].face_b.bottom != this.cubes[1][1].face_b.top) count++;
+        if(this.cubes[0][2].face_b.bottom != this.cubes[1][2].face_b.top) count++;
+        if(this.cubes[0][3].face_b.bottom != this.cubes[1][3].face_b.top) count++;
+        if(this.cubes[0][3].face_c.bottom != this.cubes[1][3].face_c.top) count++;
+
+        if(this.cubes[1][0].face_b.right != this.cubes[1][1].face_b.left) count++;
+        if(this.cubes[1][1].face_b.right != this.cubes[1][2].face_b.left) count++;
+        if(this.cubes[1][2].face_b.right != this.cubes[1][3].face_b.left) count++;
+
+        if(this.cubes[1][0].face_d.top != this.cubes[1][1].face_d.bottom) count++;
+        if(this.cubes[1][1].face_d.top != this.cubes[1][2].face_d.bottom) count++;
+        if(this.cubes[1][2].face_d.top != this.cubes[1][3].face_d.bottom) count++;
+
+        if(this.cubes[1][0].face_e.top != this.cubes[1][1].face_e.bottom) count++;
+        if(this.cubes[1][1].face_e.top != this.cubes[1][2].face_e.bottom) count++;
+        if(this.cubes[1][2].face_e.top != this.cubes[1][3].face_e.bottom) count++;
+
+        if(this.cubes[1][0].face_e.right != this.cubes[0][0].face_e.left) count++;
+        if(this.cubes[1][1].face_e.right != this.cubes[0][1].face_e.left) count++;
+        if(this.cubes[1][2].face_e.right != this.cubes[0][2].face_e.left) count++;
+        if(this.cubes[1][3].face_e.right != this.cubes[0][3].face_e.left) count++;
+
+        if(this.cubes[0][0].face_e.top != this.cubes[0][1].face_e.bottom) count++;
+        if(this.cubes[0][1].face_e.top != this.cubes[0][2].face_e.bottom) count++;
+        if(this.cubes[0][2].face_e.top != this.cubes[0][3].face_e.bottom) count++;
+
+        if(this.cubes[0][0].face_f.top != this.cubes[0][1].face_f.bottom) count++;
+        if(this.cubes[0][1].face_f.top != this.cubes[0][2].face_f.bottom) count++;
+        if(this.cubes[0][2].face_f.top != this.cubes[0][3].face_f.bottom) count++;
+
+        return count;
+    }
+}
+
+export default {Cube, Board};
