@@ -17,3 +17,7 @@
 .adjacent_bad {
   background-color: red;
 }
+
+.selected {
+  outline: 6px solid rgb(255 160 0 / 75%);
+}

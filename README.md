@@ -21,7 +21,7 @@ duplicate cubes further reduces number of positions by 3! x 2! x 2! = 24 --> onl
 
 4. interactive
 
-choose cubes, select each cube to rotate
+choose cube, swap cubes, rotate cube (turn left/top/right/bottom, rotate cw/ccw)
 
 5. define constraints
 
@@ -62,3 +62,8 @@ Your app is ready to be deployed!
 ## Deployment
 
 You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+
+
+## Future
+
+3D svg rendering?

@@ -1,3 +1,5 @@
+import { Show } from "solid-js";
+
 import puzzle from './puzzle.js';
 import { Board, CubeNet, TurnCube } from './visualize.jsx';
 
@@ -14,7 +16,10 @@ const BOARD = new puzzle.Board([[CubeA, CubeA, CubeA, CubeD],
 function App() {
   return (
       <div class={styles.App}>
-          Invalid: {BOARD.invalid()}
+          <Show when={BOARD.invalid()} fallback="Solved!">
+              Invalid: {BOARD.invalid()}
+          </Show>
+
           <Board cubes={BOARD.cubes} />
 
           <h2>A</h2>

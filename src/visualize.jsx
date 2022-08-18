@@ -1,8 +1,10 @@
+import { createSignal } from "solid-js";
 import styles from './App.module.css';
 
 function CubeFace(props) {
     return (
-        <td class={styles.face}>
+        <td classList={{[styles.face]: true, [styles.selected]: props.selected}}
+            onClick={props.onClick} >
             <svg width="90" height="90">
                 <rect fill="none" stroke="#000" x="0" y="0" width="90" height="90" />
                 {props.face.left && props.face.right
@@ -83,21 +85,31 @@ function CheckAdjacent(props) {
 }
 
 export function Board(props) {
+    const [selected, setSelected] = createSignal([0, 0]);
+    const is_selected = (r, c) => selected()[0] == r && selected()[1] == c;
     return (
         <table>
             <tbody>
                 <tr>
                     <CubeFace face={props.cubes[0][0].face_a} />
-                    <CubeFace face={props.cubes[0][0].face_b} />
+                    <CubeFace face={props.cubes[0][0].face_b}
+                              onClick={() => setSelected([0, 0])}
+                              selected={is_selected(0, 0)} />
                     <CheckAdjacent edge1={props.cubes[0][0].face_b.right}
                                    edge2={props.cubes[0][1].face_b.left} />
-                    <CubeFace face={props.cubes[0][1].face_b} />
+                    <CubeFace face={props.cubes[0][1].face_b}
+                              onClick={() => setSelected([0, 1])}
+                              selected={is_selected(0, 1)} />
                     <CheckAdjacent edge1={props.cubes[0][1].face_b.right}
                                    edge2={props.cubes[0][2].face_b.left} />
-                    <CubeFace face={props.cubes[0][2].face_b} />
+                    <CubeFace face={props.cubes[0][2].face_b}
+                              onClick={() => setSelected([0, 2])}
+                              selected={is_selected(0, 2)} />
                     <CheckAdjacent edge1={props.cubes[0][2].face_b.right}
                                    edge2={props.cubes[0][3].face_b.left} />
-                    <CubeFace face={props.cubes[0][3].face_b} />
+                    <CubeFace face={props.cubes[0][3].face_b}
+                              onClick={() => setSelected([0, 3])}
+                              selected={is_selected(0, 3)} />
                     <CubeFace face={props.cubes[0][3].face_c} />
                 </tr>
                 <tr>
@@ -119,16 +131,24 @@ export function Board(props) {
                 </tr>
                 <tr>
                     <CubeFace face={props.cubes[1][0].face_a} />
-                    <CubeFace face={props.cubes[1][0].face_b} />
+                    <CubeFace face={props.cubes[1][0].face_b}
+                              onClick={() => setSelected([1, 0])}
+                              selected={is_selected(1, 0)} />
                     <CheckAdjacent edge1={props.cubes[1][0].face_b.right}
                                    edge2={props.cubes[1][1].face_b.left} />
-                    <CubeFace face={props.cubes[1][1].face_b} />
+                    <CubeFace face={props.cubes[1][1].face_b}
+                              onClick={() => setSelected([1, 1])}
+                              selected={is_selected(1, 1)} />
                     <CheckAdjacent edge1={props.cubes[1][1].face_b.right}
                                    edge2={props.cubes[1][2].face_b.left} />
-                    <CubeFace face={props.cubes[1][2].face_b} />
+                    <CubeFace face={props.cubes[1][2].face_b}
+                              onClick={() => setSelected([1, 2])}
+                              selected={is_selected(1, 2)} />
                     <CheckAdjacent edge1={props.cubes[1][2].face_b.right}
                                    edge2={props.cubes[1][3].face_b.left} />
-                    <CubeFace face={props.cubes[1][3].face_b} />
+                    <CubeFace face={props.cubes[1][3].face_b}
+                              onClick={() => setSelected([1, 3])}
+                              selected={is_selected(1, 3)} />
                     <CubeFace face={props.cubes[1][3].face_c} />
                 </tr>
                 <tr>
