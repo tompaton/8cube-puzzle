@@ -50,3 +50,137 @@ export function CubeNet(props) {
         </table>
     );
 }
+
+
+export function TurnCube(props) {
+    return (
+        <table>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td><CubeNet cube={props.cube.turn_top()} /></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><CubeNet cube={props.cube.turn_left()} /></td>
+                    <td><CubeNet cube={props.cube} /></td>
+                    <td><CubeNet cube={props.cube.turn_right()} /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><CubeNet cube={props.cube.turn_bottom()} /></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    );
+}
+
+export function Board(props) {
+    return (
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <CubeFace face={props.cubes[0][0].face_a} />
+                                </tr>
+                                <tr>
+                                    <CubeFace face={props.cubes[1][0].face_a} />
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <CubeFace face={props.cubes[0][0].face_b} />
+                                    <CubeFace face={props.cubes[0][1].face_b} />
+                                    <CubeFace face={props.cubes[0][2].face_b} />
+                                    <CubeFace face={props.cubes[0][3].face_b} />
+                                </tr>
+                                <tr>
+                                    <CubeFace face={props.cubes[1][0].face_b} />
+                                    <CubeFace face={props.cubes[1][1].face_b} />
+                                    <CubeFace face={props.cubes[1][2].face_b} />
+                                    <CubeFace face={props.cubes[1][3].face_b} />
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <CubeFace face={props.cubes[0][3].face_c} />
+                                </tr>
+                                <tr>
+                                    <CubeFace face={props.cubes[1][3].face_c} />
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <CubeFace face={props.cubes[1][0].turn_bottom().face_b} />
+                                    <CubeFace face={props.cubes[1][1].turn_bottom().face_b} />
+                                    <CubeFace face={props.cubes[1][2].turn_bottom().face_b} />
+                                    <CubeFace face={props.cubes[1][3].turn_bottom().face_b} />
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <CubeFace face={props.cubes[1][0].turn_bottom().turn_bottom().face_b} />
+                                    <CubeFace face={props.cubes[1][1].turn_bottom().turn_bottom().face_b} />
+                                    <CubeFace face={props.cubes[1][2].turn_bottom().turn_bottom().face_b} />
+                                    <CubeFace face={props.cubes[1][3].turn_bottom().turn_bottom().face_b} />
+                                </tr>
+                                <tr>
+                                    <CubeFace face={props.cubes[0][0].turn_bottom().turn_bottom().face_b} />
+                                    <CubeFace face={props.cubes[0][1].turn_bottom().turn_bottom().face_b} />
+                                    <CubeFace face={props.cubes[0][2].turn_bottom().turn_bottom().face_b} />
+                                    <CubeFace face={props.cubes[0][3].turn_bottom().turn_bottom().face_b} />
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <CubeFace face={props.cubes[0][0].turn_top().face_b} />
+                                    <CubeFace face={props.cubes[0][1].turn_top().face_b} />
+                                    <CubeFace face={props.cubes[0][2].turn_top().face_b} />
+                                    <CubeFace face={props.cubes[0][3].turn_top().face_b} />
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    );
+}

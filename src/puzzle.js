@@ -8,6 +8,31 @@ class Face {
         console.assert(!(this.left && this.top && this.right && this.bottom),
                        "Invalid face");
     }
+
+    get cw() {
+        const f = new Face(0);
+        f.left = this.bottom;
+        f.top = this.left;
+        f.right = this.top;
+        f.bottom = this.right;
+        return f;
+    }
+
+    get ccw() {
+        const f = new Face(0);
+        f.left = this.top;
+        f.top = this.right;
+        f.right = this.bottom;
+        f.bottom = this.left;
+        return f;
+    }
+
+    get bits() {
+        return ((this.left ? 0b1000 : 0)
+                + (this.top ? 0b0100 : 0)
+                + (this.right ? 0b0010 : 0)
+                + (this.bottom ? 0b0001 : 0));
+    }
 }
 
 class Cube {
@@ -37,6 +62,26 @@ class Cube {
             && this.face_f.top == this.face_c.top
             && this.face_f.right == this.face_b.top
         );
+    }
+
+    turn_left() {
+        return new Cube([this.face_e.ccw.bits, this.face_a.bits, this.face_b.bits,
+                         this.face_d.cw.bits, this.face_c.cw.bits, this.face_f.ccw.bits]);
+    }
+
+    turn_right() {
+        return new Cube([this.face_b.bits, this.face_c.bits, this.face_e.ccw.bits,
+                         this.face_d.ccw.bits, this.face_a.cw.bits, this.face_f.cw.bits]);
+    }
+
+    turn_top() {
+        return new Cube([this.face_a.cw.bits, this.face_f.cw.bits, this.face_c.ccw.bits,
+                         this.face_b.ccw.bits, this.face_d.bits, this.face_e.bits]);
+    }
+
+    turn_bottom() {
+        return new Cube([this.face_a.ccw.bits, this.face_d.cw.bits, this.face_c.cw.bits,
+                         this.face_e.bits, this.face_f.bits, this.face_b.ccw.bits]);
     }
 }
 
