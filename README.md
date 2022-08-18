@@ -8,65 +8,22 @@ can flip and rotate around each axis to get another solution (reduce positions b
 
 8! x 6 x 4 x 1/8 options = 40320 x 3 = 120960 positions
 
-adjacent faces have to match
-
-faces can be:
-blank
-top-bottom
-left-right
-left
-right
-top
-bottom
-top-bottom + left
-left + bottom
+edges on adjacent faces have to match
 
 duplicate cubes further reduces number of positions by 3! x 2! x 2! = 24 --> only 5040?!
-
-3 x A
-2 x B
-2 x C
-1 x D
-
-cube net
-a b c        - left top right
-    d e f    -          front bottom back
-
-
-board constraints
-
-1 2 3 4
-5 6 7 8
-
-2 or 3 outside edges of adjoining faces need to match
-(possibly inside edge too?)
-
-right = left --> 1-2 2-3 3-4 4-5 5-6 6-7 7-8
-top = bottom --> 1-5 2-6 3-7 4-8
 
 
 1. define board
 
-4 x 2 array of cubes
-cube - which type (4) which face up (6) which orientation (4)
-
 2. define cubes
 
-each face is either a connection or not (doesn't matter if it goes through) so 2^4 = 8 options x 6 faces.
-
-rotating cube (orientation) will just shift these connections (from face to face and within top/bottom faces)
-
 3. visualise
-
-2d unwrapped? repeat edges?
 
 4. interactive
 
 choose cubes, select each cube to rotate
 
 5. define constraints
-
-cube i face j edge k = cube p face q edge r
 
 6. visualise constraints
 
