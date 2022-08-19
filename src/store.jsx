@@ -12,17 +12,37 @@ const StoreContext = createContext();
 export function StoreProvider(props) {
     const [state, setState] = createStore({
         selected: [0, 0],
+        swapping: null,
         cubes: [[CubeA, CubeA, CubeA, CubeD],
                 [CubeB, CubeB, CubeC, CubeC]]
     });
+    const swap = (r, c, r1, c1) => {
+        const a = state.cubes[r][c];
+        const b = state.cubes[r1][c1];
+        setState('cubes', r1, c1, a);
+        setState('cubes', r, c, b);
+    };
     const store = [
         state,
         {
             select(r, c) {
-                setState('selected', [r, c]);
+                if(state.swapping) {
+                    const [r1, c1] = state.selected;
+                    swap(r, c, r1, c1);
+                    setState('selected', [r, c]);
+                    setState('swapping', null);
+                } else {
+                    setState('selected', [r, c]);
+                }
             },
             is_selected(r, c) {
                 return state.selected[0] == r && state.selected[1] == c;
+            },
+            start_swap() {
+                setState('swapping', state.selected);
+            },
+            cancel_swap() {
+                setState('swapping', null);
             },
             turn_left() {
                 const [r, c] = state.selected;
@@ -40,8 +60,14 @@ export function StoreProvider(props) {
                 const [r, c] = state.selected;
                 setState('cubes', r, c, (old) => old.turn_bottom());
             },
-            spin_cw() {},
-            spin_ccw() {}
+            turn_cw() {
+                const [r, c] = state.selected;
+                setState('cubes', r, c, (old) => old.turn_cw());
+            },
+            turn_ccw() {
+                const [r, c] = state.selected;
+                setState('cubes', r, c, (old) => old.turn_ccw());
+            }
         }
     ];
 

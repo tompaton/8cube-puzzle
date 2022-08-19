@@ -40,6 +40,14 @@ class Cube {
         this.faces = faces.map((f) => new Face(f));
         console.assert(this.valid(), "Invalid cube");
     }
+    /*
+      cube net
+      >  a b c
+      >      d e f
+      b is the top face
+      probably would have been more sensible to use c as the top face...
+    */
+
     get face_a() { return this.faces[0]; }
     get face_b() { return this.faces[1]; }
     get face_c() { return this.faces[2]; }
@@ -65,23 +73,39 @@ class Cube {
     }
 
     turn_left() {
-        return new Cube([this.face_e.ccw.bits, this.face_a.bits, this.face_b.bits,
-                         this.face_d.cw.bits, this.face_c.cw.bits, this.face_f.ccw.bits]);
+        return new Cube([
+            this.face_e.ccw.bits, this.face_a.bits, this.face_b.bits,
+            this.face_d.cw.bits, this.face_c.cw.bits, this.face_f.ccw.bits]);
     }
 
     turn_right() {
-        return new Cube([this.face_b.bits, this.face_c.bits, this.face_e.ccw.bits,
-                         this.face_d.ccw.bits, this.face_a.cw.bits, this.face_f.cw.bits]);
+        return new Cube([
+            this.face_b.bits, this.face_c.bits, this.face_e.ccw.bits,
+            this.face_d.ccw.bits, this.face_a.cw.bits, this.face_f.cw.bits]);
     }
 
     turn_top() {
-        return new Cube([this.face_a.cw.bits, this.face_f.cw.bits, this.face_c.ccw.bits,
-                         this.face_b.ccw.bits, this.face_d.bits, this.face_e.bits]);
+        return new Cube([
+            this.face_a.cw.bits, this.face_f.cw.bits, this.face_c.ccw.bits,
+            this.face_b.ccw.bits, this.face_d.bits, this.face_e.bits]);
     }
 
     turn_bottom() {
-        return new Cube([this.face_a.ccw.bits, this.face_d.cw.bits, this.face_c.cw.bits,
-                         this.face_e.bits, this.face_f.bits, this.face_b.ccw.bits]);
+        return new Cube([
+            this.face_a.ccw.bits, this.face_d.cw.bits, this.face_c.cw.bits,
+            this.face_e.bits, this.face_f.bits, this.face_b.ccw.bits]);
+    }
+
+    turn_cw() {
+        return new Cube([
+            this.face_d.cw.cw.bits, this.face_b.cw.bits, this.face_f.cw.cw.bits,
+            this.face_c.bits, this.face_e.ccw.bits, this.face_a.bits]);
+    }
+
+    turn_ccw() {
+        return new Cube([
+            this.face_f.bits, this.face_b.ccw.bits, this.face_d.bits,
+            this.face_a.ccw.ccw.bits, this.face_e.cw.bits, this.face_c.ccw.ccw.bits]);
     }
 }
 

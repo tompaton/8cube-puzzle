@@ -21,8 +21,6 @@ duplicate cubes further reduces number of positions by 3! x 2! x 2! = 24 --> onl
 
 4. interactive
 
-choose cube, swap cubes, rotate cube (turn left/top/right/bottom, rotate cw/ccw)
-
 5. define constraints
 
 6. visualise constraints
