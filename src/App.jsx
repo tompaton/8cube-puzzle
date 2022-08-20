@@ -36,7 +36,8 @@ function App() {
 function Controls(props) {
     const [state, { start_swap, cancel_swap,
                     turn_left, turn_right, turn_top, turn_bottom,
-                    turn_cw, turn_ccw }] = useStore();
+                    turn_cw, turn_ccw,
+                    solve}] = useStore();
     return (
         <div>
             <button onClick={() => state.swapping ? cancel_swap() : start_swap()}>{state.swapping ? "cancel" : "swap"}</button>
@@ -46,6 +47,9 @@ function Controls(props) {
             <button onClick={() => turn_bottom()}>turn bottom</button>
             <button onClick={() => turn_cw()}>spin cw</button>
             <button onClick={() => turn_ccw()}>spin ccw</button>
+            <br/>
+            <br/>
+            <button onClick={() => solve()}>solve</button>
         </div>
     );
 }

@@ -107,6 +107,65 @@ class Cube {
             this.face_f.bits, this.face_b.ccw.bits, this.face_d.bits,
             this.face_a.ccw.ccw.bits, this.face_e.cw.bits, this.face_c.ccw.ccw.bits]);
     }
+
+    rotate(face, edge) {
+        if(edge === 'left') {
+            if(face === 'a')
+                return this.turn_left().turn_cw();
+            if(face === 'b')
+                return this.turn_cw();
+            if(face === 'c')
+                return this.turn_right().turn_cw();
+            if(face === 'd')
+                return this.turn_bottom();
+            if(face === 'e')
+                return this.turn_bottom().turn_bottom();
+            if(face === 'f')
+                return this.turn_top();
+        }
+        if(edge === 'top') {
+            if(face === 'a')
+                return this.turn_left();
+            if(face === 'b')
+                return this;
+            if(face === 'c')
+                return this.turn_right();
+            if(face === 'd')
+                return this.turn_bottom().turn_ccw();
+            if(face === 'e')
+                return this.turn_bottom().turn_bottom().turn_ccw();
+            if(face === 'f')
+                return this.turn_top().turn_ccw();
+        }
+        if(edge === 'right') {
+            if(face === 'a')
+                return this.turn_left().turn_ccw();
+            if(face === 'b')
+                return this.turn_ccw();
+            if(face === 'c')
+                return this.turn_right().turn_ccw();
+            if(face === 'd')
+                return this.turn_bottom().turn_cw().turn_cw();
+            if(face === 'e')
+                return this.turn_bottom().turn_bottom().turn_cw().turn_cw();
+            if(face === 'f')
+                return this.turn_top().turn_cw().turn_cw();
+        }
+        if(edge === 'bottom') {
+            if(face === 'a')
+                return this.turn_left().turn_cw().turn_cw();
+            if(face === 'b')
+                return this.turn_cw().turn_cw();
+            if(face === 'c')
+                return this.turn_right().turn_cw().turn_cw();
+            if(face === 'd')
+                return this.turn_bottom().turn_cw();
+            if(face === 'e')
+                return this.turn_bottom().turn_bottom().turn_cw();
+            if(face === 'f')
+                return this.turn_top().turn_cw();
+        }
+    }
 }
 
 function invalid(cubes) {
@@ -151,4 +210,79 @@ function invalid(cubes) {
     return count;
 }
 
-export default {Cube, invalid};
+function cube_rotations() {
+    const result = [];
+    for(const face of ['a', 'b', 'c', 'd', 'e', 'f'])
+        for(const edge of ['left', 'top', 'right', 'bottom'])
+            result.push([face, edge]);
+    return result;
+}
+
+// console.log('cube_rotations', cube_rotations());
+
+// options "AAABBCCD"
+// cube permutations: 8! / 4 (symmetries) / (3! x 2! x 2! = 24) (repeats) = 420
+function cube_permutations(options) {
+    const seen = {};
+    const results = [];
+    for(const result of all_permutations(options))
+        if(seen[result] === undefined) {
+            results.push(result);
+            for(const same of symmetries(result))
+                seen[same] = true;
+        }
+    console.assert(Object.keys(seen).length == 40320, "Not all permutations seen?");
+    return results;
+}
+
+// console.log('cube_permutations', cube_permutations('AAABBCCD'));
+
+// all permutations: 8! = 40320
+function all_permutations(options) {
+      function *permute(a, n = a.length) {
+          if (n <= 1) yield a.slice();
+          else for (let i = 0; i < n; i++) {
+              yield *permute(a, n - 1);
+              const j = n % 2 ? 0 : i;
+              [a[n-1], a[j]] = [a[j], a[n-1]];
+          }
+      }
+
+    return Array.from(permute(options.split(''))).map(perm => perm.join(''));
+}
+
+// console.log('all_permutations', all_permutations('AAABBCCD'));
+
+function symmetries(result) {
+    const results = [];
+
+    // result is an 8 letter string
+    // 0123
+    // 4567
+    results.push(result);
+
+    // flip vertically
+    // 4567
+    // 0123
+    const r0 = result.substr(0, 4);
+    const r1 = result.substr(4, 4);
+    results.push(r1 + r0);
+
+    // flip horizontally
+    // 3210
+    // 7654
+    const flip0 = r0[3] + r0[2] + r0[1] + r0[0];
+    const flip1 = r1[3] + r1[2] + r1[1] + r1[0];
+    results.push(flip0 + flip1);
+
+    // rotate 180
+    // 7654
+    // 3210
+    results.push(flip1 + flip0);
+
+    return results;
+}
+
+// console.log('symmetries', symmetries('01234567'));
+
+export default {Cube, invalid, cube_rotations, cube_permutations};

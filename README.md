@@ -32,6 +32,29 @@ c) which orientation
 
 8. generate new cubes
 
+
+variables / domains
+
+- cube arrangement
+  - do as a single variable so that we can remove symmetrical variants
+  - domain is all permutations minus rotated/mirrored and identical cubes
+
+- rotation for each cube (6)
+- spin for each cube (4)
+  - i.e. 16 variables in total
+  - this way we can prune the tree early if any two cubes are not consistent
+    with each other
+  - or 8 variables with a domain of (6 x 4)
+
+constraints
+
+- single constraint that the board is valid?
+  - won't work as not all cube rotations will be defined...
+
+- 28 constraints between adjacent edges
+
+
+
 ## Usage
 
 ```bash
