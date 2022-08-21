@@ -166,27 +166,27 @@ export function StoreProvider(props) {
             },
             turn_left() {
                 const [r, c] = state.selected;
-                setState('cubes', r, c, (old) => old.turn_left());
+                setState('cubes', r, c, (old) => puzzle.rotate(old, 'a', 'top'));
             },
             turn_right() {
                 const [r, c] = state.selected;
-                setState('cubes', r, c, (old) => old.turn_right());
+                setState('cubes', r, c, (old) => puzzle.rotate(old, 'c', 'top'));
             },
             turn_top() {
                 const [r, c] = state.selected;
-                setState('cubes', r, c, (old) => old.turn_top());
+                setState('cubes', r, c, (old) => puzzle.rotate(old, 'f', 'left'));
             },
             turn_bottom() {
                 const [r, c] = state.selected;
-                setState('cubes', r, c, (old) => old.turn_bottom());
+                setState('cubes', r, c, (old) => puzzle.rotate(old, 'd', 'left'));
             },
             turn_cw() {
                 const [r, c] = state.selected;
-                setState('cubes', r, c, (old) => old.turn_cw());
+                setState('cubes', r, c, (old) => puzzle.rotate(old, 'b', 'left'));
             },
             turn_ccw() {
                 const [r, c] = state.selected;
-                setState('cubes', r, c, (old) => old.turn_ccw());
+                setState('cubes', r, c, (old) => puzzle.rotate(old, 'b', 'right'));
             },
             solve
         }

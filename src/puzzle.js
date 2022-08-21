@@ -35,6 +35,30 @@ class Face {
     }
 }
 
+function horizontal_edge(face) {
+    return face.left && face.right;
+}
+
+function left_edge(face) {
+    return face.left && !face.right;
+}
+
+function right_edge(face) {
+    return !face.left && face.right;
+}
+
+function vertical_edge(face) {
+    return face.top && face.bottom;
+}
+
+function top_edge(face) {
+    return face.top && !face.bottom;
+}
+
+function bottom_edge(face) {
+    return !face.top && face.bottom;
+}
+
 class Cube {
     constructor (faces) {
         this.faces = faces.map((f) => new Face(f));
@@ -168,6 +192,10 @@ class Cube {
     }
 }
 
+function rotate(cube, face, edge) { return cube.rotate(face, edge); }
+function rotated_face(cube, face, edge) { return cube.rotate(face, edge).face_b; }
+function rotated_edge(cube, face, edge, edge2) { return cube.rotate(face, edge).face_b[edge2]; }
+
 function invalid(cubes) {
     var count = 0;
 
@@ -285,4 +313,9 @@ function symmetries(result) {
 
 // console.log('symmetries', symmetries('01234567'));
 
-export default {Cube, invalid, cube_rotations, cube_permutations};
+export default {
+    Cube, invalid, cube_rotations, cube_permutations,
+    horizontal_edge, left_edge, right_edge,
+    vertical_edge, top_edge, bottom_edge,
+    rotate, rotated_face, rotated_edge
+};

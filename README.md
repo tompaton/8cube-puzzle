@@ -88,3 +88,17 @@ You can deploy the `dist` folder to any static host provider (netlify, surge, no
 ## Future
 
 3D svg rendering?
+
+
+## Optimisations
+
+store cube structure more efficiently
+
+do rotations of cubes and faces as permutations
+
+can combine permutations before constructing new cube
+
+permutation can just be a view into a single cube object, not
+necessary to construct a new cube
+
+precompute 4 x 6 permutations and store those as the domain
