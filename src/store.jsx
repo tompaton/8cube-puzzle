@@ -3,10 +3,10 @@ import { createStore, produce } from "solid-js/store";
 import puzzle from './puzzle.js';
 import { Constraint, CSP } from './constraints.js';
 
-export const CubeA = new puzzle.Cube([0b0000, 0b0011, 0b1010, 0b1010, 0b1100, 0b0000]);  // x 3
-export const CubeB = new puzzle.Cube([0b0000, 0b0001, 0b0101, 0b1110, 0b1000, 0b0100]);  // x 2
-export const CubeC = new puzzle.Cube([0b0010, 0b1110, 0b1101, 0b0100, 0b0010, 0b1110]);  // x 2
-export const CubeD = new puzzle.Cube([0b0000, 0b0100, 0b0101, 0b0100, 0b0010, 0b1110]);  // x 1
+export const CubeA = new puzzle.Cube([0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0]);  // x 3
+export const CubeB = new puzzle.Cube([0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0]);  // x 2
+export const CubeC = new puzzle.Cube([0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0]);  // x 2
+export const CubeD = new puzzle.Cube([0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0]);  // x 1
 
 const CUBE = {
     'cube00': 0,

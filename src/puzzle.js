@@ -1,60 +1,51 @@
 class Face {
     constructor (edges) {
-        this.left = !!(edges & 0b1000);
-        this.top = !!(edges & 0b0100);
-        this.right = !!(edges & 0b0010);
-        this.bottom = !!(edges & 0b0001);
+        this.left = !!(edges[0]);
+        this.top = !!(edges[1]);
+        this.right = !!(edges[2]);
+        this.bottom = !!(edges[3]);
 
         console.assert(!(this.left && this.top && this.right && this.bottom),
                        "Invalid face");
     }
-
-    get cw() {
-        const f = new Face(0);
-        f.left = this.bottom;
-        f.top = this.left;
-        f.right = this.top;
-        f.bottom = this.right;
-        return f;
-    }
-
-    get bits() {
-        return ((this.left ? 0b1000 : 0)
-                + (this.top ? 0b0100 : 0)
-                + (this.right ? 0b0010 : 0)
-                + (this.bottom ? 0b0001 : 0));
-    }
 }
 
 function horizontal_edge(face) {
-    return face.left && face.right;
+    return face[0] && face[2];
 }
 
 function left_edge(face) {
-    return face.left && !face.right;
+    return face[0] && !face[2];
 }
 
 function right_edge(face) {
-    return !face.left && face.right;
+    return !face[0] && face[2];
 }
 
 function vertical_edge(face) {
-    return face.top && face.bottom;
+    return face[1] && face[3];
 }
 
 function top_edge(face) {
-    return face.top && !face.bottom;
+    return face[1] && !face[3];
 }
 
 function bottom_edge(face) {
-    return !face.top && face.bottom;
+    return !face[1] && face[3];
 }
 
 class Cube {
     constructor (faces) {
-        this.faces = faces.map((f) => new Face(f));
+        this.raw = faces;
+        this.faces = [new Face(face_view('a', faces)),
+                      new Face(face_view('b', faces)),
+                      new Face(face_view('c', faces)),
+                      new Face(face_view('d', faces)),
+                      new Face(face_view('e', faces)),
+                      new Face(face_view('f', faces))];
         console.assert(this.valid(), "Invalid cube");
     }
+
     /*
       cube net
       >  a b c
@@ -88,59 +79,106 @@ class Cube {
     }
 }
 
+function identity() {
+    // 6 faces (a, b, c, d, e, f), 4 edges (left, top, right, bottom)
+    return [0, 1, 2, 3,
+            4, 5, 6, 7,
+            8, 9, 10, 11,
+            12, 13, 14, 15,
+            16, 17, 18, 19,
+            20, 21, 22, 23];
+}
+
+function cw(face) {
+    return [face[3], face[0], face[1], face[2]];
+}
+
+function ccw(face) {
+    return [face[1], face[2], face[3], face[0]];
+}
+
+function face_view(face, cube) {
+    // TODO: slice
+    const i = {'a': 0, 'b': 4, 'c': 8, 'd': 12, 'e': 16, 'f': 20}[face];
+    return [cube[i + 0], cube[i + 1], cube[i + 2], cube[i + 3]];
+}
+
+function edge_view(face, edge, cube) {
+    return face_view(face, cube)[{'left': 0, 'top': 1, 'right': 2, 'bottom': 3}[edge]];
+}
 
 function turn_left(cube) {
-    return new Cube([
-        cube.face_e.cw.cw.cw.bits, cube.face_a.bits, cube.face_b.bits,
-        cube.face_d.cw.bits, cube.face_c.cw.bits, cube.face_f.cw.cw.cw.bits]);
+    return [
+        ... ccw(face_view('e', cube)),
+        ... face_view('a', cube),
+        ... face_view('b', cube),
+        ... cw(face_view('d', cube)),
+        ... cw(face_view('c', cube)),
+        ... ccw(face_view('f', cube))
+    ];
 }
 
 function turn_top(cube) {
-    return new Cube([
-        cube.face_a.cw.bits, cube.face_f.cw.bits, cube.face_c.cw.cw.cw.bits,
-        cube.face_b.cw.cw.cw.bits, cube.face_d.bits, cube.face_e.bits]);
+    return [
+        ... cw(face_view('a', cube)),
+        ... cw(face_view('f', cube)),
+        ... ccw(face_view('c', cube)),
+        ... ccw(face_view('b', cube)),
+        ... face_view('d', cube),
+        ... face_view('e', cube)
+    ];
 }
 
 function turn_cw(cube) {
-    return new Cube([
-        cube.face_d.cw.cw.bits, cube.face_b.cw.bits, cube.face_f.cw.cw.bits,
-        cube.face_c.bits, cube.face_e.cw.cw.cw.bits, cube.face_a.bits]);
+    return [
+        ... cw(cw((face_view('d', cube)))),
+        ... cw(face_view('b', cube)),
+        ... cw(cw(face_view('f', cube))),
+        ... face_view('c', cube),
+        ... ccw(face_view('e', cube)),
+        ... face_view('a', cube)
+    ];
+}
+
+function _view(cube, fn) {
+    const result = [];
+    for(const i of fn)
+        result.push(cube[i]);
+    return result;
 }
 
 function _compose() {
-    const fns = arguments;
-    return (cube) => {
-        for(const fn of fns)
-            cube = fn(cube);
-        return cube;
-    };
+    var result = identity();
+    for(const fn of arguments)
+        result = fn(result);
+    return result;
 }
 
-const turn_right = _compose(turn_left, turn_left, turn_left);
-const turn_bottom = _compose(turn_top, turn_top, turn_top);
-const turn_ccw = _compose(turn_cw, turn_cw, turn_cw);
+const turn_right = (cube) => _view(cube, _compose(turn_left, turn_left, turn_left));
+const turn_bottom = (cube) => _view(cube, _compose(turn_top, turn_top, turn_top));
+const turn_ccw = (cube) => _view(cube, _compose(turn_cw, turn_cw, turn_cw));
 
 const ROTATE = {
     'a': {
         'left': _compose(turn_left, turn_cw),
-        'top': turn_left,
+        'top': _compose(turn_left),
         'right': _compose(turn_left, turn_ccw),
         'bottom': _compose(turn_left, turn_cw, turn_cw),
     },
     'b': {
-        'left': turn_cw,
-        'top': (cube) => cube,
-        'right': turn_ccw,
+        'left': _compose(turn_cw),
+        'top': _compose(identity),
+        'right': _compose(turn_ccw),
         'bottom': _compose(turn_cw, turn_cw),
     },
     'c': {
         'left': _compose(turn_right, turn_cw),
-        'top': turn_right,
+        'top': _compose(turn_right),
         'right': _compose(turn_right, turn_ccw),
         'bottom': _compose(turn_right, turn_cw, turn_cw),
     },
     'd': {
-        'left': turn_bottom,
+        'left': _compose(turn_bottom),
         'top': _compose(turn_bottom, turn_ccw),
         'right': _compose(turn_bottom, turn_cw, turn_cw),
         'bottom': _compose(turn_bottom, turn_cw),
@@ -152,7 +190,7 @@ const ROTATE = {
         'bottom': _compose(turn_top, turn_top, turn_cw),
     },
     'f': {
-        'left': turn_top,
+        'left': _compose(turn_top),
         'top': _compose(turn_top, turn_ccw),
         'right': _compose(turn_top, turn_cw, turn_cw),
         'bottom': _compose(turn_top, turn_cw),
@@ -160,11 +198,11 @@ const ROTATE = {
 };
 
 function rotate(face, edge) {
-    return ROTATE[face][edge];
+    return (cube) => new Cube(_view(cube.raw, ROTATE[face][edge]));
 }
 
-function rotated_face(cube, face, edge) { return rotate(face, edge)(cube).face_b; }
-function rotated_edge(cube, face, edge, edge2) { return rotate(face, edge)(cube).face_b[edge2]; }
+function rotated_face(cube, face, edge) { return face_view('b', rotate(face, edge)(cube).raw); }
+function rotated_edge(cube, face, edge, edge2) { return edge_view('b', edge2, rotate(face, edge)(cube).raw); }
 
 function invalid(cubes) {
     var count = 0;
