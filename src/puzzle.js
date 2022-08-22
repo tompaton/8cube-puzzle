@@ -120,63 +120,47 @@ const turn_right = _compose(turn_left, turn_left, turn_left);
 const turn_bottom = _compose(turn_top, turn_top, turn_top);
 const turn_ccw = _compose(turn_cw, turn_cw, turn_cw);
 
+const ROTATE = {
+    'a': {
+        'left': _compose(turn_left, turn_cw),
+        'top': turn_left,
+        'right': _compose(turn_left, turn_ccw),
+        'bottom': _compose(turn_left, turn_cw, turn_cw),
+    },
+    'b': {
+        'left': turn_cw,
+        'top': (cube) => cube,
+        'right': turn_ccw,
+        'bottom': _compose(turn_cw, turn_cw),
+    },
+    'c': {
+        'left': _compose(turn_right, turn_cw),
+        'top': turn_right,
+        'right': _compose(turn_right, turn_ccw),
+        'bottom': _compose(turn_right, turn_cw, turn_cw),
+    },
+    'd': {
+        'left': turn_bottom,
+        'top': _compose(turn_bottom, turn_ccw),
+        'right': _compose(turn_bottom, turn_cw, turn_cw),
+        'bottom': _compose(turn_bottom, turn_cw),
+    },
+    'e': {
+        'left': _compose(turn_top, turn_top),
+        'top': _compose(turn_top, turn_top, turn_ccw),
+        'right': _compose(turn_top, turn_top, turn_cw, turn_cw),
+        'bottom': _compose(turn_top, turn_top, turn_cw),
+    },
+    'f': {
+        'left': turn_top,
+        'top': _compose(turn_top, turn_ccw),
+        'right': _compose(turn_top, turn_cw, turn_cw),
+        'bottom': _compose(turn_top, turn_cw),
+    },
+};
+
 function rotate(face, edge) {
-    if(edge === 'left') {
-        if(face === 'a')
-            return _compose(turn_left, turn_cw);
-        if(face === 'b')
-            return turn_cw;
-        if(face === 'c')
-            return _compose(turn_right, turn_cw);
-        if(face === 'd')
-            return turn_bottom;
-        if(face === 'e')
-            return _compose(turn_top, turn_top);
-        if(face === 'f')
-            return turn_top;
-    }
-    if(edge === 'top') {
-        if(face === 'a')
-            return turn_left;
-        if(face === 'b')
-            return (cube) => cube;
-        if(face === 'c')
-            return turn_right;
-        if(face === 'd')
-            return _compose(turn_bottom, turn_ccw);
-        if(face === 'e')
-            return _compose(turn_top, turn_top, turn_ccw);
-        if(face === 'f')
-            return _compose(turn_top, turn_ccw);
-    }
-    if(edge === 'right') {
-        if(face === 'a')
-            return _compose(turn_left, turn_ccw);
-        if(face === 'b')
-            return turn_ccw;
-        if(face === 'c')
-            return _compose(turn_right, turn_ccw);
-        if(face === 'd')
-            return _compose(turn_bottom, turn_cw, turn_cw);
-        if(face === 'e')
-            return _compose(turn_top, turn_top, turn_cw, turn_cw);
-        if(face === 'f')
-            return _compose(turn_top, turn_cw, turn_cw);
-    }
-    if(edge === 'bottom') {
-        if(face === 'a')
-            return _compose(turn_left, turn_cw, turn_cw);
-        if(face === 'b')
-            return _compose(turn_cw, turn_cw);
-        if(face === 'c')
-            return _compose(turn_right, turn_cw, turn_cw);
-        if(face === 'd')
-            return _compose(turn_bottom, turn_cw);
-        if(face === 'e')
-            return _compose(turn_top, turn_top, turn_cw);
-        if(face === 'f')
-            return _compose(turn_top, turn_cw);
-    }
+    return ROTATE[face][edge];
 }
 
 function rotated_face(cube, face, edge) { return rotate(face, edge)(cube).face_b; }
