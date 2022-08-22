@@ -192,9 +192,9 @@ class Cube {
     }
 }
 
-function rotate(cube, face, edge) { return cube.rotate(face, edge); }
-function rotated_face(cube, face, edge) { return cube.rotate(face, edge).face_b; }
-function rotated_edge(cube, face, edge, edge2) { return cube.rotate(face, edge).face_b[edge2]; }
+function rotate(face, edge) { return (cube) => cube.rotate(face, edge); }
+function rotated_face(cube, face, edge) { return rotate(face, edge)(cube).face_b; }
+function rotated_edge(cube, face, edge, edge2) { return rotate(face, edge)(cube).face_b[edge2]; }
 
 function invalid(cubes) {
     var count = 0;

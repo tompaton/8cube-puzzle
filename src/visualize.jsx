@@ -61,17 +61,17 @@ export function TurnCube(props) {
             <tbody>
                 <tr>
                     <td></td>
-                    <td><CubeNet cube={puzzle.rotate(props.cube, 'f', 'left')} /></td>
+                    <td><CubeNet cube={puzzle.rotate('f', 'left')(props.cube)} /></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td><CubeNet cube={puzzle.rotate(props.cube, 'a', 'top')} /></td>
+                    <td><CubeNet cube={puzzle.rotate('a', 'top')(props.cube)} /></td>
                     <td><CubeNet cube={props.cube} /></td>
-                    <td><CubeNet cube={puzzle.rotate(props.cube, 'c', 'top')} /></td>
+                    <td><CubeNet cube={puzzle.rotate('c', 'top')(props.cube)} /></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><CubeNet cube={puzzle.rotate(props.cube, 'd', 'left')} /></td>
+                    <td><CubeNet cube={puzzle.rotate('d', 'left')(props.cube)} /></td>
                     <td></td>
                 </tr>
             </tbody>
