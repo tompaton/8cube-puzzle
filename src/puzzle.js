@@ -86,82 +86,96 @@ class Cube {
             && this.face_f.right == this.face_b.top
         );
     }
-
-    turn_left() {
-        return new Cube([
-            this.face_e.cw.cw.cw.bits, this.face_a.bits, this.face_b.bits,
-            this.face_d.cw.bits, this.face_c.cw.bits, this.face_f.cw.cw.cw.bits]);
-    }
-
-    turn_top() {
-        return new Cube([
-            this.face_a.cw.bits, this.face_f.cw.bits, this.face_c.cw.cw.cw.bits,
-            this.face_b.cw.cw.cw.bits, this.face_d.bits, this.face_e.bits]);
-    }
-
-    turn_cw() {
-        return new Cube([
-            this.face_d.cw.cw.bits, this.face_b.cw.bits, this.face_f.cw.cw.bits,
-            this.face_c.bits, this.face_e.cw.cw.cw.bits, this.face_a.bits]);
-    }
 }
+
+
+function turn_left(cube) {
+    return new Cube([
+        cube.face_e.cw.cw.cw.bits, cube.face_a.bits, cube.face_b.bits,
+        cube.face_d.cw.bits, cube.face_c.cw.bits, cube.face_f.cw.cw.cw.bits]);
+}
+
+function turn_top(cube) {
+    return new Cube([
+        cube.face_a.cw.bits, cube.face_f.cw.bits, cube.face_c.cw.cw.cw.bits,
+        cube.face_b.cw.cw.cw.bits, cube.face_d.bits, cube.face_e.bits]);
+}
+
+function turn_cw(cube) {
+    return new Cube([
+        cube.face_d.cw.cw.bits, cube.face_b.cw.bits, cube.face_f.cw.cw.bits,
+        cube.face_c.bits, cube.face_e.cw.cw.cw.bits, cube.face_a.bits]);
+}
+
+function _compose() {
+    const fns = arguments;
+    return (cube) => {
+        for(const fn of fns)
+            cube = fn(cube);
+        return cube;
+    };
+}
+
+const turn_right = _compose(turn_left, turn_left, turn_left);
+const turn_bottom = _compose(turn_top, turn_top, turn_top);
+const turn_ccw = _compose(turn_cw, turn_cw, turn_cw);
 
 function rotate(face, edge) {
     if(edge === 'left') {
         if(face === 'a')
-            return (cube) => cube.turn_left().turn_cw();
+            return _compose(turn_left, turn_cw);
         if(face === 'b')
-            return (cube) => cube.turn_cw();
+            return turn_cw;
         if(face === 'c')
-            return (cube) => cube.turn_left().turn_left().turn_left().turn_cw();
+            return _compose(turn_right, turn_cw);
         if(face === 'd')
-            return (cube) => cube.turn_top().turn_top().turn_top();
+            return turn_bottom;
         if(face === 'e')
-            return (cube) => cube.turn_top().turn_top();
+            return _compose(turn_top, turn_top);
         if(face === 'f')
-            return (cube) => cube.turn_top();
+            return turn_top;
     }
     if(edge === 'top') {
         if(face === 'a')
-            return (cube) => cube.turn_left();
+            return turn_left;
         if(face === 'b')
             return (cube) => cube;
         if(face === 'c')
-            return (cube) => cube.turn_left().turn_left().turn_left();
+            return turn_right;
         if(face === 'd')
-            return (cube) => cube.turn_top().turn_top().turn_top().turn_cw().turn_cw().turn_cw();
+            return _compose(turn_bottom, turn_ccw);
         if(face === 'e')
-            return (cube) => cube.turn_top().turn_top().turn_cw().turn_cw().turn_cw();
+            return _compose(turn_top, turn_top, turn_ccw);
         if(face === 'f')
-            return (cube) => cube.turn_top().turn_cw().turn_cw().turn_cw();
+            return _compose(turn_top, turn_ccw);
     }
     if(edge === 'right') {
         if(face === 'a')
-            return (cube) => cube.turn_left().turn_cw().turn_cw().turn_cw();
+            return _compose(turn_left, turn_ccw);
         if(face === 'b')
-            return (cube) => cube.turn_cw().turn_cw().turn_cw();
+            return turn_ccw;
         if(face === 'c')
-            return (cube) => cube.turn_left().turn_left().turn_left().turn_cw().turn_cw().turn_cw();
+            return _compose(turn_right, turn_ccw);
         if(face === 'd')
-            return (cube) => cube.turn_top().turn_top().turn_top().turn_cw().turn_cw();
+            return _compose(turn_bottom, turn_cw, turn_cw);
         if(face === 'e')
-            return (cube) => cube.turn_top().turn_top().turn_cw().turn_cw();
+            return _compose(turn_top, turn_top, turn_cw, turn_cw);
         if(face === 'f')
-            return (cube) => cube.turn_top().turn_cw().turn_cw();
+            return _compose(turn_top, turn_cw, turn_cw);
     }
     if(edge === 'bottom') {
         if(face === 'a')
-            return (cube) => cube.turn_left().turn_cw().turn_cw();
+            return _compose(turn_left, turn_cw, turn_cw);
         if(face === 'b')
-            return (cube) => cube.turn_cw().turn_cw();
+            return _compose(turn_cw, turn_cw);
         if(face === 'c')
-            return (cube) => cube.turn_left().turn_left().turn_left().turn_cw().turn_cw();
+            return _compose(turn_right, turn_cw, turn_cw);
         if(face === 'd')
-            return (cube) => cube.turn_top().turn_top().turn_top().turn_cw();
+            return _compose(turn_bottom, turn_cw);
         if(face === 'e')
-            return (cube) => cube.turn_top().turn_top().turn_cw();
+            return _compose(turn_top, turn_top, turn_cw);
         if(face === 'f')
-            return (cube) => cube.turn_top().turn_cw();
+            return _compose(turn_top, turn_cw);
     }
 }
 
