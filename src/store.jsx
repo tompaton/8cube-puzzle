@@ -20,7 +20,7 @@ const CUBE = {
 };
 
 function get_cube(which, face, edge) {
-    return {'A': CubeA, 'B': CubeB, 'C': CubeC, 'D': CubeD}[which].rotate(face, edge);
+    return puzzle.rotate(face, edge)({'A': CubeA, 'B': CubeB, 'C': CubeC, 'D': CubeD}[which]);
 }
 
 class EdgeConstraint extends Constraint {

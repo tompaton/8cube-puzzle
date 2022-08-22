@@ -18,15 +18,6 @@ class Face {
         return f;
     }
 
-    get ccw() {
-        const f = new Face(0);
-        f.left = this.top;
-        f.top = this.right;
-        f.right = this.bottom;
-        f.bottom = this.left;
-        return f;
-    }
-
     get bits() {
         return ((this.left ? 0b1000 : 0)
                 + (this.top ? 0b0100 : 0)
@@ -98,101 +89,82 @@ class Cube {
 
     turn_left() {
         return new Cube([
-            this.face_e.ccw.bits, this.face_a.bits, this.face_b.bits,
-            this.face_d.cw.bits, this.face_c.cw.bits, this.face_f.ccw.bits]);
-    }
-
-    turn_right() {
-        return new Cube([
-            this.face_b.bits, this.face_c.bits, this.face_e.ccw.bits,
-            this.face_d.ccw.bits, this.face_a.cw.bits, this.face_f.cw.bits]);
+            this.face_e.cw.cw.cw.bits, this.face_a.bits, this.face_b.bits,
+            this.face_d.cw.bits, this.face_c.cw.bits, this.face_f.cw.cw.cw.bits]);
     }
 
     turn_top() {
         return new Cube([
-            this.face_a.cw.bits, this.face_f.cw.bits, this.face_c.ccw.bits,
-            this.face_b.ccw.bits, this.face_d.bits, this.face_e.bits]);
-    }
-
-    turn_bottom() {
-        return new Cube([
-            this.face_a.ccw.bits, this.face_d.cw.bits, this.face_c.cw.bits,
-            this.face_e.bits, this.face_f.bits, this.face_b.ccw.bits]);
+            this.face_a.cw.bits, this.face_f.cw.bits, this.face_c.cw.cw.cw.bits,
+            this.face_b.cw.cw.cw.bits, this.face_d.bits, this.face_e.bits]);
     }
 
     turn_cw() {
         return new Cube([
             this.face_d.cw.cw.bits, this.face_b.cw.bits, this.face_f.cw.cw.bits,
-            this.face_c.bits, this.face_e.ccw.bits, this.face_a.bits]);
-    }
-
-    turn_ccw() {
-        return new Cube([
-            this.face_f.bits, this.face_b.ccw.bits, this.face_d.bits,
-            this.face_a.ccw.ccw.bits, this.face_e.cw.bits, this.face_c.ccw.ccw.bits]);
-    }
-
-    rotate(face, edge) {
-        if(edge === 'left') {
-            if(face === 'a')
-                return this.turn_left().turn_cw();
-            if(face === 'b')
-                return this.turn_cw();
-            if(face === 'c')
-                return this.turn_right().turn_cw();
-            if(face === 'd')
-                return this.turn_bottom();
-            if(face === 'e')
-                return this.turn_bottom().turn_bottom();
-            if(face === 'f')
-                return this.turn_top();
-        }
-        if(edge === 'top') {
-            if(face === 'a')
-                return this.turn_left();
-            if(face === 'b')
-                return this;
-            if(face === 'c')
-                return this.turn_right();
-            if(face === 'd')
-                return this.turn_bottom().turn_ccw();
-            if(face === 'e')
-                return this.turn_bottom().turn_bottom().turn_ccw();
-            if(face === 'f')
-                return this.turn_top().turn_ccw();
-        }
-        if(edge === 'right') {
-            if(face === 'a')
-                return this.turn_left().turn_ccw();
-            if(face === 'b')
-                return this.turn_ccw();
-            if(face === 'c')
-                return this.turn_right().turn_ccw();
-            if(face === 'd')
-                return this.turn_bottom().turn_cw().turn_cw();
-            if(face === 'e')
-                return this.turn_bottom().turn_bottom().turn_cw().turn_cw();
-            if(face === 'f')
-                return this.turn_top().turn_cw().turn_cw();
-        }
-        if(edge === 'bottom') {
-            if(face === 'a')
-                return this.turn_left().turn_cw().turn_cw();
-            if(face === 'b')
-                return this.turn_cw().turn_cw();
-            if(face === 'c')
-                return this.turn_right().turn_cw().turn_cw();
-            if(face === 'd')
-                return this.turn_bottom().turn_cw();
-            if(face === 'e')
-                return this.turn_bottom().turn_bottom().turn_cw();
-            if(face === 'f')
-                return this.turn_top().turn_cw();
-        }
+            this.face_c.bits, this.face_e.cw.cw.cw.bits, this.face_a.bits]);
     }
 }
 
-function rotate(face, edge) { return (cube) => cube.rotate(face, edge); }
+function rotate(face, edge) {
+    if(edge === 'left') {
+        if(face === 'a')
+            return (cube) => cube.turn_left().turn_cw();
+        if(face === 'b')
+            return (cube) => cube.turn_cw();
+        if(face === 'c')
+            return (cube) => cube.turn_left().turn_left().turn_left().turn_cw();
+        if(face === 'd')
+            return (cube) => cube.turn_top().turn_top().turn_top();
+        if(face === 'e')
+            return (cube) => cube.turn_top().turn_top();
+        if(face === 'f')
+            return (cube) => cube.turn_top();
+    }
+    if(edge === 'top') {
+        if(face === 'a')
+            return (cube) => cube.turn_left();
+        if(face === 'b')
+            return (cube) => cube;
+        if(face === 'c')
+            return (cube) => cube.turn_left().turn_left().turn_left();
+        if(face === 'd')
+            return (cube) => cube.turn_top().turn_top().turn_top().turn_cw().turn_cw().turn_cw();
+        if(face === 'e')
+            return (cube) => cube.turn_top().turn_top().turn_cw().turn_cw().turn_cw();
+        if(face === 'f')
+            return (cube) => cube.turn_top().turn_cw().turn_cw().turn_cw();
+    }
+    if(edge === 'right') {
+        if(face === 'a')
+            return (cube) => cube.turn_left().turn_cw().turn_cw().turn_cw();
+        if(face === 'b')
+            return (cube) => cube.turn_cw().turn_cw().turn_cw();
+        if(face === 'c')
+            return (cube) => cube.turn_left().turn_left().turn_left().turn_cw().turn_cw().turn_cw();
+        if(face === 'd')
+            return (cube) => cube.turn_top().turn_top().turn_top().turn_cw().turn_cw();
+        if(face === 'e')
+            return (cube) => cube.turn_top().turn_top().turn_cw().turn_cw();
+        if(face === 'f')
+            return (cube) => cube.turn_top().turn_cw().turn_cw();
+    }
+    if(edge === 'bottom') {
+        if(face === 'a')
+            return (cube) => cube.turn_left().turn_cw().turn_cw();
+        if(face === 'b')
+            return (cube) => cube.turn_cw().turn_cw();
+        if(face === 'c')
+            return (cube) => cube.turn_left().turn_left().turn_left().turn_cw().turn_cw();
+        if(face === 'd')
+            return (cube) => cube.turn_top().turn_top().turn_top().turn_cw();
+        if(face === 'e')
+            return (cube) => cube.turn_top().turn_top().turn_cw();
+        if(face === 'f')
+            return (cube) => cube.turn_top().turn_cw();
+    }
+}
+
 function rotated_face(cube, face, edge) { return rotate(face, edge)(cube).face_b; }
 function rotated_edge(cube, face, edge, edge2) { return rotate(face, edge)(cube).face_b[edge2]; }
 
