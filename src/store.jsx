@@ -166,27 +166,27 @@ export function StoreProvider(props) {
             },
             turn_left() {
                 const [r, c] = state.selected;
-                setState('cubes', r, c, (old) => puzzle.rotate('a', 'top')(old));
+                setState('cubes', r, c, (old) => puzzle.rotate(0, 1)(old));
             },
             turn_right() {
                 const [r, c] = state.selected;
-                setState('cubes', r, c, (old) => puzzle.rotate('c', 'top')(old));
+                setState('cubes', r, c, (old) => puzzle.rotate(2, 1)(old));
             },
             turn_top() {
                 const [r, c] = state.selected;
-                setState('cubes', r, c, (old) => puzzle.rotate('f', 'left')(old));
+                setState('cubes', r, c, (old) => puzzle.rotate(5, 0)(old));
             },
             turn_bottom() {
                 const [r, c] = state.selected;
-                setState('cubes', r, c, (old) => puzzle.rotate('d', 'left')(old));
+                setState('cubes', r, c, (old) => puzzle.rotate(3, 0)(old));
             },
             turn_cw() {
                 const [r, c] = state.selected;
-                setState('cubes', r, c, (old) => puzzle.rotate('b', 'left')(old));
+                setState('cubes', r, c, (old) => puzzle.rotate(1, 0)(old));
             },
             turn_ccw() {
                 const [r, c] = state.selected;
-                setState('cubes', r, c, (old) => puzzle.rotate('b', 'right')(old));
+                setState('cubes', r, c, (old) => puzzle.rotate(1, 2)(old));
             },
             solve
         }

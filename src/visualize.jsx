@@ -36,18 +36,18 @@ export function CubeNet(props) {
         <table>
             <tbody>
                 <tr>
-                    <CubeFace face={puzzle.rotated_face(props.cube, 'a', 'top')} />
-                    <CubeFace face={puzzle.rotated_face(props.cube, 'b', 'top')} />
-                    <CubeFace face={puzzle.rotated_face(props.cube, 'c', 'top')} />
+                    <CubeFace face={puzzle.rotated_face(props.cube, 0, 1)} />
+                    <CubeFace face={puzzle.rotated_face(props.cube, 1, 1)} />
+                    <CubeFace face={puzzle.rotated_face(props.cube, 2, 1)} />
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
-                    <CubeFace face={puzzle.rotated_face(props.cube, 'd', 'top')} />
-                    <CubeFace face={puzzle.rotated_face(props.cube, 'e', 'top')} />
-                    <CubeFace face={puzzle.rotated_face(props.cube, 'f', 'top')} />
+                    <CubeFace face={puzzle.rotated_face(props.cube, 3, 1)} />
+                    <CubeFace face={puzzle.rotated_face(props.cube, 4, 1)} />
+                    <CubeFace face={puzzle.rotated_face(props.cube, 5, 1)} />
                 </tr>
             </tbody>
         </table>
@@ -61,17 +61,17 @@ export function TurnCube(props) {
             <tbody>
                 <tr>
                     <td></td>
-                    <td><CubeNet cube={puzzle.rotate('f', 'left')(props.cube)} /></td>
+                    <td><CubeNet cube={puzzle.rotate(5, 0)(props.cube)} /></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td><CubeNet cube={puzzle.rotate('a', 'top')(props.cube)} /></td>
+                    <td><CubeNet cube={puzzle.rotate(0, 1)(props.cube)} /></td>
                     <td><CubeNet cube={props.cube} /></td>
-                    <td><CubeNet cube={puzzle.rotate('c', 'top')(props.cube)} /></td>
+                    <td><CubeNet cube={puzzle.rotate(2, 1)(props.cube)} /></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><CubeNet cube={puzzle.rotate('d', 'left')(props.cube)} /></td>
+                    <td><CubeNet cube={puzzle.rotate(3, 0)(props.cube)} /></td>
                     <td></td>
                 </tr>
             </tbody>
@@ -92,135 +92,135 @@ export function Board(props) {
         <table>
             <tbody>
                 <tr>
-                    <CubeFace face={puzzle.rotated_face(props.cubes[0][0], 'a', 'top')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[0][0], 'b', 'top')}
+                    <CubeFace face={puzzle.rotated_face(props.cubes[0][0], 0, 1)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[0][0], 1, 1)}
                               onClick={() => select(0, 0)}
                               selected={is_selected(0, 0)} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][0], 'b', 'top', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[0][1], 'b', 'top', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[0][1], 'b', 'top')}
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][0], 1, 1, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[0][1], 1, 1, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[0][1], 1, 1)}
                               onClick={() => select(0, 1)}
                               selected={is_selected(0, 1)} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][1], 'b', 'top', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[0][2], 'b', 'top', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[0][2], 'b', 'top')}
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][1], 1, 1, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[0][2], 1, 1, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[0][2], 1, 1)}
                               onClick={() => select(0, 2)}
                               selected={is_selected(0, 2)} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][2], 'b', 'top', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[0][3], 'b', 'top', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[0][3], 'b', 'top')}
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][2], 1, 1, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[0][3], 1, 1, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[0][3], 1, 1)}
                               onClick={() => select(0, 3)}
                               selected={is_selected(0, 3)} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[0][3], 'c', 'top')} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[0][3], 2, 1)} />
                 </tr>
                 <tr>
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][0], 'a', 'top', 'bottom')}
-                                   edge2={puzzle.rotated_edge(props.cubes[1][0], 'a', 'top', 'top')} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][0], 'b', 'top', 'bottom')}
-                                   edge2={puzzle.rotated_edge(props.cubes[1][0], 'b', 'top', 'top')} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][0], 0, 1, 3)}
+                                   edge2={puzzle.rotated_edge(props.cubes[1][0], 0, 1, 1)} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][0], 1, 1, 3)}
+                                   edge2={puzzle.rotated_edge(props.cubes[1][0], 1, 1, 1)} />
                     <td></td>
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][1], 'b', 'top', 'bottom')}
-                                   edge2={puzzle.rotated_edge(props.cubes[1][1], 'b', 'top', 'top')} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][1], 1, 1, 3)}
+                                   edge2={puzzle.rotated_edge(props.cubes[1][1], 1, 1, 1)} />
                     <td></td>
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][2], 'b', 'top', 'bottom')}
-                                   edge2={puzzle.rotated_edge(props.cubes[1][2], 'b', 'top', 'top')} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][2], 1, 1, 3)}
+                                   edge2={puzzle.rotated_edge(props.cubes[1][2], 1, 1, 1)} />
                     <td></td>
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][3], 'b', 'top', 'bottom')}
-                                   edge2={puzzle.rotated_edge(props.cubes[1][3], 'b', 'top', 'top')} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][3], 'c', 'top', 'bottom')}
-                                   edge2={puzzle.rotated_edge(props.cubes[1][3], 'c', 'top', 'top')} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][3], 1, 1, 3)}
+                                   edge2={puzzle.rotated_edge(props.cubes[1][3], 1, 1, 1)} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][3], 2, 1, 3)}
+                                   edge2={puzzle.rotated_edge(props.cubes[1][3], 2, 1, 1)} />
                 </tr>
                 <tr>
-                    <CubeFace face={puzzle.rotated_face(props.cubes[1][0], 'a', 'top')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[1][0], 'b', 'top')}
+                    <CubeFace face={puzzle.rotated_face(props.cubes[1][0], 0, 1)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[1][0], 1, 1)}
                               onClick={() => select(1, 0)}
                               selected={is_selected(1, 0)} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][0], 'b', 'top', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[1][1], 'b', 'top', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[1][1], 'b', 'top')}
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][0], 1, 1, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[1][1], 1, 1, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[1][1], 1, 1)}
                               onClick={() => select(1, 1)}
                               selected={is_selected(1, 1)} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][1], 'b', 'top', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[1][2], 'b', 'top', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[1][2], 'b', 'top')}
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][1], 1, 1, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[1][2], 1, 1, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[1][2], 1, 1)}
                               onClick={() => select(1, 2)}
                               selected={is_selected(1, 2)} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][2], 'b', 'top', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[1][3], 'b', 'top', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[1][3], 'b', 'top')}
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][2], 1, 1, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[1][3], 1, 1, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[1][3], 1, 1)}
                               onClick={() => select(1, 3)}
                               selected={is_selected(1, 3)} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[1][3], 'c', 'top')} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[1][3], 2, 1)} />
                 </tr>
                 <tr>
                     <td></td>
-                    <CubeFace face={puzzle.rotated_face(props.cubes[1][0], 'd', 'left')} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][0], 'd', 'left', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[1][1], 'd', 'left', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[1][1], 'd', 'left')} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][1], 'd', 'left', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[1][2], 'd', 'left', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[1][2], 'd', 'left')} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][2], 'd', 'left', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[1][3], 'd', 'left', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[1][3], 'd', 'left')} />
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <CubeFace face={puzzle.rotated_face(props.cubes[1][0], 'e', 'left')} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][0], 'e', 'left', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[1][1], 'e', 'left', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[1][1], 'e', 'left')} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][1], 'e', 'left', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[1][2], 'e', 'left', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[1][2], 'e', 'left')} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][2], 'e', 'left', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[1][3], 'e', 'left', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[1][3], 'e', 'left')} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[1][0], 3, 0)} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][0], 3, 0, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[1][1], 3, 0, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[1][1], 3, 0)} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][1], 3, 0, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[1][2], 3, 0, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[1][2], 3, 0)} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][2], 3, 0, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[1][3], 3, 0, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[1][3], 3, 0)} />
                     <td></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][0], 'e', 'left', 'bottom')}
-                                   edge2={puzzle.rotated_edge(props.cubes[0][0], 'e', 'left', 'top')} />
-                    <td></td>
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][1], 'e', 'left', 'bottom')}
-                                   edge2={puzzle.rotated_edge(props.cubes[0][1], 'e', 'left', 'top')} />
-                    <td></td>
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][2], 'e', 'left', 'bottom')}
-                                   edge2={puzzle.rotated_edge(props.cubes[0][2], 'e', 'left', 'top')} />
-                    <td></td>
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][3], 'e', 'left', 'bottom')}
-                                   edge2={puzzle.rotated_edge(props.cubes[0][3], 'e', 'left', 'top')} />
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <CubeFace face={puzzle.rotated_face(props.cubes[0][0], 'e', 'left')} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][0], 'e', 'left', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[0][1], 'e', 'left', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[0][1], 'e', 'left')} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][1], 'e', 'left', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[0][2], 'e', 'left', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[0][2], 'e', 'left')} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][2], 'e', 'left', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[0][3], 'e', 'left', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[0][3], 'e', 'left')} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[1][0], 4, 0)} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][0], 4, 0, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[1][1], 4, 0, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[1][1], 4, 0)} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][1], 4, 0, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[1][2], 4, 0, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[1][2], 4, 0)} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][2], 4, 0, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[1][3], 4, 0, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[1][3], 4, 0)} />
                     <td></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <CubeFace face={puzzle.rotated_face(props.cubes[0][0], 'f', 'left')} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][0], 'f', 'left', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[0][1], 'f', 'left', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[0][1], 'f', 'left')} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][1], 'f', 'left', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[0][2], 'f', 'left', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[0][2], 'f', 'left')} />
-                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][2], 'f', 'left', 'right')}
-                                   edge2={puzzle.rotated_edge(props.cubes[0][3], 'f', 'left', 'left')} />
-                    <CubeFace face={puzzle.rotated_face(props.cubes[0][3], 'f', 'left')} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][0], 4, 0, 3)}
+                                   edge2={puzzle.rotated_edge(props.cubes[0][0], 4, 0, 1)} />
+                    <td></td>
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][1], 4, 0, 3)}
+                                   edge2={puzzle.rotated_edge(props.cubes[0][1], 4, 0, 1)} />
+                    <td></td>
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][2], 4, 0, 3)}
+                                   edge2={puzzle.rotated_edge(props.cubes[0][2], 4, 0, 1)} />
+                    <td></td>
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[1][3], 4, 0, 3)}
+                                   edge2={puzzle.rotated_edge(props.cubes[0][3], 4, 0, 1)} />
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <CubeFace face={puzzle.rotated_face(props.cubes[0][0], 4, 0)} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][0], 4, 0, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[0][1], 4, 0, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[0][1], 4, 0)} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][1], 4, 0, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[0][2], 4, 0, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[0][2], 4, 0)} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][2], 4, 0, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[0][3], 4, 0, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[0][3], 4, 0)} />
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <CubeFace face={puzzle.rotated_face(props.cubes[0][0], 5, 0)} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][0], 5, 0, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[0][1], 5, 0, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[0][1], 5, 0)} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][1], 5, 0, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[0][2], 5, 0, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[0][2], 5, 0)} />
+                    <CheckAdjacent edge1={puzzle.rotated_edge(props.cubes[0][2], 5, 0, 2)}
+                                   edge2={puzzle.rotated_edge(props.cubes[0][3], 5, 0, 0)} />
+                    <CubeFace face={puzzle.rotated_face(props.cubes[0][3], 5, 0)} />
                     <td></td>
                 </tr>
             </tbody>
