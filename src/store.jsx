@@ -78,6 +78,7 @@ function solve_csp() {
     const domains = {};
     for(const cube of variables)
         domains[cube] = puzzle.cube_rotations();
+    // single variable for cube selection so we can remove symmetrical variants
     domains['cubes'] = puzzle.cube_permutations('AAABBCCD');
 
     const csp = new CSP(variables, domains);
@@ -96,6 +97,7 @@ function solve_csp() {
     csp.add_constraint(new EdgeConstraint('cube03', 'cube13', 'right'));
     csp.add_constraint(new EdgeConstraint('cube12', 'cube13', 'bottom'));
 
+    // TODO: array of all results
     const result = csp.backtracking_search();
     console.log('Solution', result);
     return result;
@@ -163,6 +165,7 @@ export function StoreProvider(props) {
                 setState('cubes', r, c, (old) => puzzle.rotate(1, 2)(old));
             },
             solve() {
+                // TODO: store array of results, cycle through each click
                 const result = solve_csp();
                 setState('cubes', 0, 0, get_cube(result, 'cube00'));
                 setState('cubes', 0, 1, get_cube(result, 'cube01'));

@@ -13,48 +13,6 @@ edges on adjacent faces have to match
 duplicate cubes further reduces number of positions by 3! x 2! x 2! = 24 --> only 5040?!
 
 
-1. define board
-
-2. define cubes
-
-3. visualise
-
-4. interactive
-
-5. define constraints
-
-6. visualise constraints
-
-7. depth first search to find solution with max number of constraints satisfied
-a) just choosing which cubes
-b) which face up
-c) which orientation
-
-8. generate new cubes
-
-
-variables / domains
-
-- cube arrangement
-  - do as a single variable so that we can remove symmetrical variants
-  - domain is all permutations minus rotated/mirrored and identical cubes
-
-- rotation for each cube (6)
-- spin for each cube (4)
-  - i.e. 16 variables in total
-  - this way we can prune the tree early if any two cubes are not consistent
-    with each other
-  - or 8 variables with a domain of (6 x 4)
-
-constraints
-
-- single constraint that the board is valid?
-  - won't work as not all cube rotations will be defined...
-
-- 28 constraints between adjacent edges
-
-
-
 ## Usage
 
 ```bash
@@ -89,16 +47,6 @@ You can deploy the `dist` folder to any static host provider (netlify, surge, no
 
 3D svg rendering?
 
+generate new cubes
 
-## Optimisations
-
-store cube structure more efficiently
-
-do rotations of cubes and faces as permutations
-
-can combine permutations before constructing new cube
-
-permutation can just be a view into a single cube object, not
-necessary to construct a new cube
-
-precompute 4 x 6 permutations and store those as the domain
+cycle through all solutions
