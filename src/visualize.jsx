@@ -7,25 +7,27 @@ function CubeFace(props) {
         <td classList={{[styles.face]: true, [styles.selected]: props.selected}}
             onClick={props.onClick} >
             <svg width="90" height="90">
-                <rect fill="none" stroke="#000" x="0" y="0" width="90" height="90" />
-                {puzzle.horizontal_edge(props.face)
-                 ? <rect fill="none" stroke="#000" x="0" y="30" width="90" height="30" />
-                 : ""}
-                {puzzle.left_edge(props.face)
-                 ? <circle cx="0" cy="45" r="15" fill="none" stroke="#000" />
-                 : "" }
-                {puzzle.right_edge(props.face)
-                 ? <circle cx="90" cy="45" r="15" fill="none" stroke="#000" />
-                 : "" }
-                {puzzle.vertical_edge(props.face)
-                 ? <rect fill="none" stroke="#000" x="30" y="0" width="30" height="90" />
-                 : ""}
-                {puzzle.top_edge(props.face)
-                 ? <circle cx="45" cy="0" r="15" fill="none" stroke="#000" />
-                 : "" }
-                {puzzle.bottom_edge(props.face)
-                 ? <circle cx="45" cy="90" r="15" fill="none" stroke="#000" />
-                 : "" }
+                <g fill="none" stroke="#000" stroke-width="3">
+                    <rect x="0" y="0" width="90" height="90" stroke-width="1" />
+                    {puzzle.horizontal_edge(props.face)
+                     ? <rect x="0" y="30" width="90" height="30" />
+                     : ""}
+                    {puzzle.left_edge(props.face)
+                     ? <circle cx="0" cy="45" r="15"/>
+                     : "" }
+                    {puzzle.right_edge(props.face)
+                     ? <circle cx="90" cy="45" r="15" />
+                     : "" }
+                    {puzzle.vertical_edge(props.face)
+                     ? <rect x="30" y="0" width="30" height="90" />
+                     : ""}
+                    {puzzle.top_edge(props.face)
+                     ? <circle cx="45" cy="0" r="15" />
+                     : "" }
+                    {puzzle.bottom_edge(props.face)
+                     ? <circle cx="45" cy="90" r="15" />
+                     : "" }
+                </g>
             </svg>
         </td>
     );

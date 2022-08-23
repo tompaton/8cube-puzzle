@@ -97,10 +97,13 @@ function solve_csp() {
     csp.add_constraint(new EdgeConstraint('cube03', 'cube13', 'right'));
     csp.add_constraint(new EdgeConstraint('cube12', 'cube13', 'bottom'));
 
-    // TODO: array of all results
-    const result = csp.backtracking_search();
-    console.log('Solution', result);
-    return result;
+    // build array with a result for each cube permutation
+    // return csp.backtracking_search();
+    const results = [];
+    for(const cubes of csp.domains['cubes'])
+        results.push(csp.backtracking_search({'cubes': cubes}));
+    //console.log('Solution', results);
+    return results;
 }
 
 const StoreContext = createContext();
@@ -110,7 +113,9 @@ export function StoreProvider(props) {
         selected: [0, 0],
         swapping: null,
         cubes: [[CubeA, CubeA, CubeA, CubeD],
-                [CubeB, CubeB, CubeC, CubeC]]
+                [CubeB, CubeB, CubeC, CubeC]],
+        solutions: null,
+        solution: -1,
     });
     const swap = (r, c, r1, c1) => {
         const a = state.cubes[r][c];
@@ -165,8 +170,12 @@ export function StoreProvider(props) {
                 setState('cubes', r, c, (old) => puzzle.rotate(1, 2)(old));
             },
             solve() {
-                // TODO: store array of results, cycle through each click
-                const result = solve_csp();
+                if(state.solutions === null) {
+                    setState('solutions', solve_csp());
+                }
+                setState('solution', i => (i + 1) % state.solutions.length);
+                const result = state.solutions[state.solution];
+
                 setState('cubes', 0, 0, get_cube(result, 'cube00'));
                 setState('cubes', 0, 1, get_cube(result, 'cube01'));
                 setState('cubes', 0, 2, get_cube(result, 'cube02'));

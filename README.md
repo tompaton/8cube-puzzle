@@ -48,5 +48,3 @@ You can deploy the `dist` folder to any static host provider (netlify, surge, no
 3D svg rendering?
 
 generate new cubes
-
-cycle through all solutions

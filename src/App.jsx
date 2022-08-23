@@ -50,6 +50,9 @@ function Controls(props) {
             <br/>
             <br/>
             <button onClick={() => solve()}>solve</button>
+            <Show when={state.solutions}>
+                {state.solution + 1} / {state.solutions.length}
+            </Show>
         </div>
     );
 }
