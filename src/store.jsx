@@ -19,8 +19,10 @@ const CUBE = {
     'cube13': 7
 };
 
-function get_cube(which, face, edge) {
-    return puzzle.rotate(face, edge)({'A': CubeA, 'B': CubeB, 'C': CubeC, 'D': CubeD}[which]);
+function get_cube(assignment, which) {
+    const [face, edge] = assignment[which];
+    const cube = {'A': CubeA, 'B': CubeB, 'C': CubeC, 'D': CubeD}[assignment['cubes'][CUBE[which]]];
+    return puzzle.rotate(face, edge)(cube);
 }
 
 class EdgeConstraint extends Constraint {
@@ -34,68 +36,38 @@ class EdgeConstraint extends Constraint {
         if(assignment[this.variables[0]] === undefined) return true;
         if(assignment[this.variables[1]] === undefined) return true;
 
-        const cube1 = get_cube(assignment['cubes'][CUBE[this.variables[0]]],
-                               assignment[this.variables[0]][0],
-                               assignment[this.variables[0]][1]);
-        const cube2 = get_cube(assignment['cubes'][CUBE[this.variables[1]]],
-                               assignment[this.variables[1]][0],
-                               assignment[this.variables[1]][1]);
+        const cube1 = get_cube(assignment, this.variables[0]);
+        const cube2 = get_cube(assignment, this.variables[1]);
+
+        const a = (face, edge) => puzzle.edge_view(cube1, face, edge);
+        const b = (face, edge) => puzzle.edge_view(cube2, face, edge);
 
         if(this.check === 'left') {
-
+            if(a(3, 0) != b(5, 2)) return false;
+            if(a(3, 3) != b(5, 3)) return false;
+            if(a(3, 2) != b(5, 0)) return false;
         } else if(this.check === 'top') {
-
+            if(a(2, 0) != b(0, 2)) return false;
+            if(a(2, 1) != b(0, 1)) return false;
+            if(a(2, 2) != b(0, 0)) return false;
         } else if(this.check === 'right') {
-
+            if(a(3, 0) != b(5, 2)) return false;
+            if(a(3, 1) != b(5, 1)) return false;
+            if(a(3, 2) != b(5, 0)) return false;
         } else if(this.check === 'middle') {
-
+            if(a(3, 0) != b(5, 2)) return false;
+            if(a(3, 2) != b(5, 0)) return false;
         } else if(this.check === 'bottom') {
-
+            if(a(2, 0) != b(0, 2)) return false;
+            if(a(2, 3) != b(0, 3)) return false;
+            if(a(2, 2) != b(0, 0)) return false;
         }
 
-        /*
-    if(cubes[0][0].face_b.right != cubes[0][1].face_b.left) count++;
-    if(cubes[0][1].face_b.right != cubes[0][2].face_b.left) count++;
-    if(cubes[0][2].face_b.right != cubes[0][3].face_b.left) count++;
-
-    if(cubes[0][0].face_a.bottom != cubes[1][0].face_a.top) count++;
-    if(cubes[0][0].face_b.bottom != cubes[1][0].face_b.top) count++;
-    if(cubes[0][1].face_b.bottom != cubes[1][1].face_b.top) count++;
-    if(cubes[0][2].face_b.bottom != cubes[1][2].face_b.top) count++;
-    if(cubes[0][3].face_b.bottom != cubes[1][3].face_b.top) count++;
-    if(cubes[0][3].face_c.bottom != cubes[1][3].face_c.top) count++;
-
-    if(cubes[1][0].face_b.right != cubes[1][1].face_b.left) count++;
-    if(cubes[1][1].face_b.right != cubes[1][2].face_b.left) count++;
-    if(cubes[1][2].face_b.right != cubes[1][3].face_b.left) count++;
-
-    if(cubes[1][0].face_d.top != cubes[1][1].face_d.bottom) count++;
-    if(cubes[1][1].face_d.top != cubes[1][2].face_d.bottom) count++;
-    if(cubes[1][2].face_d.top != cubes[1][3].face_d.bottom) count++;
-
-    if(cubes[1][0].face_e.top != cubes[1][1].face_e.bottom) count++;
-    if(cubes[1][1].face_e.top != cubes[1][2].face_e.bottom) count++;
-    if(cubes[1][2].face_e.top != cubes[1][3].face_e.bottom) count++;
-
-    if(cubes[1][0].face_e.right != cubes[0][0].face_e.left) count++;
-    if(cubes[1][1].face_e.right != cubes[0][1].face_e.left) count++;
-    if(cubes[1][2].face_e.right != cubes[0][2].face_e.left) count++;
-    if(cubes[1][3].face_e.right != cubes[0][3].face_e.left) count++;
-
-    if(cubes[0][0].face_e.top != cubes[0][1].face_e.bottom) count++;
-    if(cubes[0][1].face_e.top != cubes[0][2].face_e.bottom) count++;
-    if(cubes[0][2].face_e.top != cubes[0][3].face_e.bottom) count++;
-
-    if(cubes[0][0].face_f.top != cubes[0][1].face_f.bottom) count++;
-    if(cubes[0][1].face_f.top != cubes[0][2].face_f.bottom) count++;
-    if(cubes[0][2].face_f.top != cubes[0][3].face_f.bottom) count++;
-         */
-
-        return false;
+        return true;
     }
 }
 
-function solve() {
+function solve_csp() {
     const variables = [
         // cube permutation
         'cubes',
@@ -108,23 +80,25 @@ function solve() {
         domains[cube] = puzzle.cube_rotations();
     domains['cubes'] = puzzle.cube_permutations('AAABBCCD');
 
-    const csp = CSP(variables, domains);
+    const csp = new CSP(variables, domains);
 
     // order checks so that it gets solved from the top left
     // 1 3 5 7
     // 2 4 6 8
-    csp.add_constraint(EdgeConstraint('cube00', 'cube10', 'left'));
-    csp.add_constraint(EdgeConstraint('cube00', 'cube01', 'top'));
-    csp.add_constraint(EdgeConstraint('cube10', 'cube11', 'bottom'));
-    csp.add_constraint(EdgeConstraint('cube01', 'cube11', 'middle'));
-    csp.add_constraint(EdgeConstraint('cube01', 'cube02', 'top'));
-    csp.add_constraint(EdgeConstraint('cube11', 'cube12', 'bottom'));
-    csp.add_constraint(EdgeConstraint('cube02', 'cube12', 'middle'));
-    csp.add_constraint(EdgeConstraint('cube02', 'cube03', 'top'));
-    csp.add_constraint(EdgeConstraint('cube03', 'cube13', 'right'));
-    csp.add_constraint(EdgeConstraint('cube12', 'cube13', 'bottom'));
+    csp.add_constraint(new EdgeConstraint('cube00', 'cube10', 'left'));
+    csp.add_constraint(new EdgeConstraint('cube00', 'cube01', 'top'));
+    csp.add_constraint(new EdgeConstraint('cube10', 'cube11', 'bottom'));
+    csp.add_constraint(new EdgeConstraint('cube01', 'cube11', 'middle'));
+    csp.add_constraint(new EdgeConstraint('cube01', 'cube02', 'top'));
+    csp.add_constraint(new EdgeConstraint('cube11', 'cube12', 'bottom'));
+    csp.add_constraint(new EdgeConstraint('cube02', 'cube12', 'middle'));
+    csp.add_constraint(new EdgeConstraint('cube02', 'cube03', 'top'));
+    csp.add_constraint(new EdgeConstraint('cube03', 'cube13', 'right'));
+    csp.add_constraint(new EdgeConstraint('cube12', 'cube13', 'bottom'));
 
-    console.log('Solution', csp.backtracking_search());
+    const result = csp.backtracking_search();
+    console.log('Solution', result);
+    return result;
 }
 
 const StoreContext = createContext();
@@ -188,7 +162,17 @@ export function StoreProvider(props) {
                 const [r, c] = state.selected;
                 setState('cubes', r, c, (old) => puzzle.rotate(1, 2)(old));
             },
-            solve
+            solve() {
+                const result = solve_csp();
+                setState('cubes', 0, 0, get_cube(result, 'cube00'));
+                setState('cubes', 0, 1, get_cube(result, 'cube01'));
+                setState('cubes', 0, 2, get_cube(result, 'cube02'));
+                setState('cubes', 0, 3, get_cube(result, 'cube03'));
+                setState('cubes', 1, 0, get_cube(result, 'cube10'));
+                setState('cubes', 1, 1, get_cube(result, 'cube11'));
+                setState('cubes', 1, 2, get_cube(result, 'cube12'));
+                setState('cubes', 1, 3, get_cube(result, 'cube13'));
+            }
         }
     ];
 

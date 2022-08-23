@@ -23,8 +23,8 @@ export class CSP {
     }
 
     add_constraint(constraint) {
-        for(const variable in constraint.variables) {
-            if(this.variables[variable] === undefined) {
+        for(const variable of constraint.variables) {
+            if(this.constraints[variable] === undefined) {
                 throw "Variable in constraint not in CSP";
             } else {
                 this.constraints[variable].push(constraint);
@@ -41,7 +41,9 @@ export class CSP {
     }
 
     backtracking_search(assignment) {
-        if(assignment.length === this.variables.length)
+        if(assignment === undefined) assignment = {};
+
+        if(Object.keys(assignment).length === this.variables.length)
             return assignment;
 
         const unassigned = [];

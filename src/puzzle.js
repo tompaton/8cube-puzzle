@@ -317,5 +317,6 @@ export default {
     Cube, invalid, cube_rotations, cube_permutations,
     horizontal_edge, left_edge, right_edge,
     vertical_edge, top_edge, bottom_edge,
-    rotate, rotated_face, rotated_edge
+    rotate, rotated_face, rotated_edge,
+    edge_view
 };
